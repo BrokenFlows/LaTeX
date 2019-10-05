@@ -1,0 +1,75 @@
+\documentclass[A4, 12pt]{report}
+
+\usepackage{thesis}
+
+\begin{document}
+
+\ifthenelse{\boolean{wc}}{}{
+\pagenumbering{roman}
+\includepdf{../TitlePage/title-page.pdf} 
+
+\ifthenelse{\boolean{wip}}{}{
+% DEDICATION
+\input{sec/dedication.tex}
+
+% ACKNOWLEDGEMENTS
+\input{sec/acknowledgements.tex}
+}% End of ifthenelse
+
+% ABSTRACT
+\input{sec/Abstract.tex}
+
+% TABLE OF CONTENTS
+\setcounter{page}{6}
+\tableofcontents
+
+% LIST OF TABLES
+\listoftables
+
+% LIST OF FIGURES
+\listoffigures
+
+% LIST OF ACRONYMS
+\chapter*{List of Acronyms}
+\addcontentsline{toc}{chapter}{List of Acronyms}
+\printacronyms[sort=true,heading=none]
+\newpage
+}% End of ifthenelse
+
+% CONTENT
+\pagenumbering{arabic}
+\setcounter{page}{1} 
+\setcounter{chapter}{0}
+% INTRODUCTION
+\input{sec/Introduction.tex}
+
+% LITERATURE REVIEW
+\input{sec/LitReview.tex}
+
+% WORK TO DATE
+\input{sec/Methods.tex}
+
+% DISCUSSION AND CONCLUSION
+\input{sec/Conclusion.tex}
+
+% IMPACT OF RESEARCH
+\input{sec/Impact.tex}
+
+% FUTURE WORK
+\input{sec/FutureWork.tex}
+
+\ifthenelse{\boolean{wc}}{}{
+% BIBLIOGRAPHY
+\bibliography{Thesis} 
+\bibliographystyle{ieeetr}
+\ifthenelse{\boolean{wip}}{}{
+% HAZARD IDENTIFICATION/ RISK ANALYSIS
+\newpage
+\includepdf[scale=1]{../AppendixD.pdf}
+}% End of ifthenelse
+}% End of ifthenelse
+
+\input{sec/Appendix.tex}
+
+\end{document}
+

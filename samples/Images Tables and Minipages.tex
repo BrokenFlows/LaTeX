@@ -1,0 +1,117 @@
+\documentclass[A4]{article}
+
+\usepackage{stdcd}
+
+\title{COMP40660 Assignment 3}
+\author{Cian Dowd}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Part 1}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{nyquist}
+	\caption{Nyquist Capacity versus Bandwidth}
+	\label{fig:nyquist}
+\end{figure}
+
+\section*{Part 2}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{shannon}
+	\caption{Shannon Capacity versus SNR (\si{\decibel})}
+	\label{fig:shannon}
+\end{figure}
+
+\section*{Part 3}
+
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
+
+\begin{table}[H]
+	\centering
+	\begin{minipage}{0.45\linewidth}
+		\centering
+		\caption{Suitable Modulation Formats}
+		\label{tab:M}
+		\begin{tabular}{ r | R{1.0cm}  R{1.0cm}  R{1.0cm}  R{1.0cm} }
+			& \SI{20}{\mega\hertz} & \SI{40}{\mega\hertz} & \SI{80}{\mega\hertz} & \SI{160}{\mega\hertz}\\
+			\hline
+			\SI{5}{\decibel} & 2 & 2 & 2 & 2\\
+			\SI{15}{\decibel} & 4 & 4 & 4 & 4\\
+			\SI{20}{\decibel} & 8 & 8 & 8 & 8\\
+			\SI{30}{\decibel} & 16 & 16 & 16 & 16\\
+		\end{tabular}
+	\end{minipage}
+	\begin{minipage}{0.45\linewidth}
+		\centering
+		\caption{Suitable Modulation Formats}
+		\label{tab:M}
+		\begin{tabular}{ r | R{1.0cm}  R{1.0cm}  R{1.0cm}  R{1.0cm} }
+			& \SI{20}{\mega\hertz} & \SI{40}{\mega\hertz} & \SI{80}{\mega\hertz} & \SI{160}{\mega\hertz}\\
+			\hline
+			\SI{5}{\decibel} & BPSK & BPSK & BPSK & BPSK\\
+			\SI{15}{\decibel} & QPSK & QPSK & QPSK & QPSK\\
+			\SI{20}{\decibel} & 8PSK & 8PSK & 8PSK & 8PSK\\
+			\SI{30}{\decibel} & 16QAM & 16QAM & 16QAM & 16QAM\\
+		\end{tabular}
+	\end{minipage}
+\end{table}
+
+\section*{Part 4}
+
+\begin{itemize}
+	\item
+		Different models will have different relations to real wireless scenarios, though theoretical capacity values are typically overly optimistic.
+		This is a result of theoretical capacity values failing to account for real scenarios with their assumptions.
+		Some of the differences between the two models we are considering and real wireless scenarios are:
+		\begin{enumerate}
+			\item[\textbf{Nyquist}]
+				assumes zero noise.
+				This is inaccurate as there will always be at least some background noise and at times there will be other interferers.
+			\item[\textbf{Shannon}]
+				assumes only additive white Gaussian Noise.
+				This is a more realistic assumption than that of Nyquist's formula as there will always be some noise.
+				Shannon's capacity formula becomes unrealistic in the presence of more complex noise and interference.
+		\end{enumerate}
+
+		SNR can be affected by many factors, directly affecting either the signal strength or the strength of the noise.\\
+
+		Factors attenuating signal strength:
+
+		\begin{itemize}
+			\item
+				Free Space Loss
+			\item
+				Feeder Lines
+			\item
+				Filters
+		\end{itemize}
+		
+		Factors increasing noise:
+		
+		\begin{itemize}
+			\item
+				Background radiation in the channel
+			\item
+				Interferers
+			\item
+				Thermal noise in hardware
+		\end{itemize}
+
+	\item
+		The modulation limits affect the SNR, and therefore the likelihood of receiving the correct symbol, and the potential throughput of the system.\\
+		For high SNR, where the receiver can make a correct decision, the higher modulation schemes allow for better throughput.\\
+		For lower SNR, where the receiver may fail to make a correct decision, the higher modulation schemes will result in constellations which are more error prone, so lower modulation schemes will be used as a fallback.
+	\item
+		The percentage capacity improvement of \texttt{1024QAM} over \texttt{256QAM} is 25\%.
+\end{itemize}
+
+\newpage
+\section*{MATLAB Code}
+\lstinputlisting[final,style=Matlab-editor]{../CSAssignment3.m}
+
+\end{document}

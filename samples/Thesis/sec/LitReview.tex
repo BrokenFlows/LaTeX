@@ -1,0 +1,222 @@
+\chapter{Background/ Literature Review}
+In this chapter we will explore existing \ac{ma} techniques, basic \ac{noma} systems, and research to date within the field of \ac{noma}.
+
+% Background on Current MA
+\section{Existing Multiple Access Technologies}
+
+\ac{ma} techniques allows multiple devices to share a medium in communications.
+These techniques improve the efficiency of communicating over a medium and are relevant to mobile communications networks, as they use finite media to communicate wirelessly with mobile \acp{ue}.
+
+\par
+\ac{ma} techniques used, in mobile networks to date, include:
+
+\begin{itemize}
+	\item[\textbf{1G}] \ac{fdma}
+	\item[\textbf{2G}] \ac{tdma}
+	\item[\textbf{3G}] \ac{cdma}
+	\item[\textbf{4G}] \ac{ofdma}
+\end{itemize}
+
+\par
+This is due to the constant growth in mobile use and data use in particular.
+
+\par
+While \ac{fdma} and \ac{tdma} allow users to use one frequency or time resource, respectively, newer \ac{ma} allows improved sharing of resources.
+\ac{cdma} allowed multiple \acp{ue} to use the same frequencies simultaneously, separating signals with orthogonal codes.
+\ac{ofdma} or \ac{oma} uses orthogonal frequencies to allow more \acp{ue} to communicate contemporaneously within a tighter grouping of frequencies.
+
+\par
+Though \ac{cdma} and \ac{ofdma} have improved spectral efficiency compared to \ac{fdma} and\ac{tdma} sharing orthogonal resources, as in \ac{noma}, increases the spectral efficiency of the system further still.
+Consider the throughput of a \ac{ceu} in an \ac{oma} system.
+In \ac{oma} the \ac{ceu} claims the whole resource but the throughput of the device is low due to channel conditions at the cell edge.
+Under \ac{noma}, \ac{ceu} can share those resources with \ac{ccu} that have better channel conditions, and therefore more efficient use of the spectrum.
+
+% Background on NOMA
+\section{Basic NOMA}
+Power-Domain \ac{noma} can serve multiple users in the same orthogonal resource
+(time slot, orthogonal code, or orthogonal frequency)
+by using power multiplexing to perform multiple access.
+This is done by allocating different powers to different users.
+\cite{ding:2017}
+Assigning different power levels to individual users allows each user to decode their signal using Interference Cancellation techniques.
+
+\par
+\Fref{fig:basicnoma} shows a simple two-user and \ac{bs} \ac{noma} downlink system.
+The following description of a Basic \ac{noma} system follows \cite{saito:2013,shahab:2018,ding:2017}.
+Taking \ac{ue}\tsb{1} as a \ac{ccu} and \ac{ue}\tsb{2} as the \ac{ceu}, we can say that their distances $d_i$ from the \ac{bs} fit $d_1 \leq d_2$.
+For the same carrier frequency, we can then say that the channel gains, $\abs{h_i}^2$, at the \ac{ue}'s fit
+$\abs{h_1}^2 \geq \abs{h_2}^2$.
+The powers, $P_i$, can then be described by $P_1 \leq P_2$, where $P_1 + P_2 = P_{total}$.
+The signals sent to the \ac{ue}'s are superposed atop each other, summing to the maximum power of the system.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1\linewidth]{../images/NOMA_SIC_Example_dark.png}
+	\caption{Basic NOMA with SIC for Two UE Receivers in Downlink}
+	\label{fig:basicnoma}
+\end{figure}
+
+\par
+To decode the signals, in downlink \ac{noma}, \ac{sic} is used.
+For $N$ users with channel gains $\abs{h_i}^2$ if
+$\abs{h_1}^2 \geq \abs{h_2}^2 \geq \ldots \geq \abs{h_N}^2$
+then each user applies \ac{sic} to
+$N-i$ signals before decoding their own.
+In the two user case that means that \ac{ue}\tsb{2} only decodes their own message, treating \ac{ue}\tsb{1}'s message as noise, while \ac{ue}\tsb{1} performs \ac{sic} then decodes its message.
+
+\par
+The achievable rate is given generally by \fref{eq:nomagen}:
+
+\begin{equation}
+	R_i = \log_2 
+	\left(
+	1 +
+	\frac{P_i \cdot \left| h_i \right| ^2}
+	{\sum_{n=1}^{i-1}P_{n} \cdot \left| h_i \right| ^2 + N_0}
+	\right)
+	\label{eq:nomagen}
+\end{equation}
+
+\par
+In the specific case of a 2-\ac{ue} \ac{noma} system the rates of \ac{ue}\tsb{1} and \ac{ue}\tsb{2} are given by \fref{eq:noma1} and \fref{eq:noma2} respectively:
+
+\begin{equation}
+	R_1 = \log_2 
+	\left(
+	1 +
+	\frac{P_1 \cdot \left| h_1 \right| ^2}
+	{N_0}
+	\right)
+	\label{eq:noma1}
+\end{equation}
+
+\begin{equation}
+	R_2 = \log_2 
+	\left(
+	1 +
+	\frac{P_2 \cdot \left| h_2 \right| ^2}
+	{P_{1} \cdot \left| h_2 \right| ^2 + N_0}
+	\right)
+	\label{eq:noma2}
+\end{equation}
+
+\par
+As was discussed above, \fref{eq:noma1} shows that \ac{ue}\tsb{1} suffers no interference from \ac{ue}\tsb{2}.
+Though \ac{ue}\tsb{1} is assigned less power, which hinders its rate, being able to remove the interfering signal boosts its rate.
+The converse is true for \ac{ue}\tsb{2} which is assigned more power but has its rate hindered by the interfering signal of \ac{ue}\tsb{1}, shown in \fref{eq:noma2}.
+
+% Beamforming Algorithms
+\section{Beamforming Algorithms}
+\ac{bf} is a process by which devices with multiple antennas can control the direction of their transmission.
+A transmission using \ac{bf} has two components:
+
+\begin{itemize}
+	\item \acl{pa}
+	\item Direction
+\end{itemize}
+
+\par
+Direction is given by what is called a \ac{bf} precoder.
+The purpose of a \ac{bf} algorithm is to determine a precoder for a \ac{ue}.
+This section will consider two popular \ac{bf} algorithms.
+
+\subsection{Zero Forcing Beamforming}
+This subsection follows details of \ac{zf} \ac{bf} outlined in \cite{zf,zf2}.
+The primary aim of \ac{zf} \ac{bf} is to nullify inter-\ac{ue} interference by forcing the power transmitted in the direction of other \acp{ue} to zero, hence the name.
+\ac{zf} focuses on the nullification of interference over maximising power in the direction of the target \ac{ue}.
+Direction of a \ac{ue} is determined by the channel, assumed through \ac{csi}.
+
+\par
+The nulling property of \ac{zf} \ac{bf} is what makes it of interest for \ac{noma} systems.
+As \acp{ceu} must endure inter-\ac{ue} interference, as they do not perform \ac{sic}, \ac{zf} may reduce the interference they experience, increase their throughput, and by extension increase the sumrate of the system.
+This increase in \ac{ceu} throughputs may be sufficient to overcome the fact that \ac{zf} \ac{bf} does not maximise power in the direction of the target \ac{ue}.
+
+\par
+\ac{zf} may cause issues for \ac{noma} as the inter-\ac{ue} interference is what \acp{ccu} use to do \ac{sic} and later reduce their interference.
+The effects of this may be seen in the results of future simulations.
+
+\par
+\Fref{eq:zf} shows the \ac{zf} algorithm used to generate the precoder.
+
+\subsection{Maximum Ratio Transmission}
+This subsection follows details of \ac{mrt} \ac{bf} outlined in \cite{mrt,mrt2}.
+\ac{mrt} contrasts with \ac{zf} as this algorithm prioritises the maximisation of each individual \ac{ue}'s throughput over all else.
+By prioritising the throughput of the target \ac{ue}, other \acp{ue} may experience some degree of interference by neglecting to consider their presence.
+
+\par
+\ac{mrt} assumes that the benefits of maximising transmission power outweigh the cons.
+In a \ac{noma} system this means that sumrate may increase as the signal strength of each \ac{ue} is maximised.
+The sumrate of each \ac{ue} is also impacted, however, by all other \acp{ue} having their signal strength maximised.
+
+\par
+As \ac{mrt} does cause inter-\ac{ue} interference there should be no hindrances to the \ac{sic} process.
+This leaves \ac{mrt} indifferent when considering \acp{ccu} but may make it a worse option for \acp{ceu}.
+
+\par
+\Fref{eq:mrt} shows the \ac{mrt} algorithm used to generate the precoder.
+
+% Optimising NOMA
+\section{Optimising NOMA}
+There have been many investigations into how to improve upon basic \ac{noma} techniques.
+In this section we will explore some of these improvements.
+
+\subsection{Hybrid NOMA}
+\label{sec:hnoma}
+\ac{hnoma} is the concept of creating a \ac{noma} system within an orthogonal resource of another \ac{oma} system.
+For example, within an \ac{ofdma} resource two \acp{ue} could share the orthogonal frequency and treat it as a single \ac{noma} resource \cite{ding:2017}.
+This is useful as to serve all \acp{ue} in a cell on a single \ac{noma} resource would not be feasible.
+
+\par
+The idea is highly dependant on \ac{uppa} as a greater \ac{plr} will increase the rates achievable by all \acp{ue} involved \cite{ding:2016}.
+\ac{hnoma} has appeal in the literature as existing \ac{oma} techniques are mature and well understood.
+The blending of traditional techniques with a means of improving spectral efficiency is very appealing.
+
+\par
+It is noteworthy that a \ac{ccu} may achieve a better rate with \ac{noma} than with traditional \ac{oma} while a \ac{ceu} is likely to achieve a worse rate with \ac{noma} than \ac{oma} \cite{ding:2017}.
+
+\subsection{Grouping UEs}
+
+\par
+Related to \ac{hnoma}, but also an area of interest in basic \ac{noma} too, is the pairing of \acp{ue} in \ac{noma} systems.
+\ac{uppa} is crucial to the success of \ac{noma} which has lead to many investigations into \ac{hnoma} and \ac{pa} algorithms.
+
+\par
+One such investigation was into a Tree-search based Transmission Power Assignment \cite{li:2014}.
+This is particularly novel for it is an ideal solution without conducting an exhaustive search.
+
+\subsection{mmWave NOMA}
+The use of \ac{mmwave} spectrum as a carrier for \ac{noma} and \acl{bf} is well known.
+Limited spectrum in our current frequency bands makes \ac{mmwave} spectrum the obvious home for future growth.
+
+\par
+It has been noted that \ac{mmwave} frequencies are well aligned for both \acl{bf} and \ac{noma} as they both benefit from MIMO \cite{ding:2017}.
+This is as a result of \ac{mmwave} allowing for smaller antennas, which in turn allow for tighter antenna arrays.
+MIMO is of course essential for \acl{bf} and benefits \ac{noma} as strong channel vector  correlation is beneficial to both MIMO and \ac{noma}.
+
+% Limitations and Future Challenges - Potential Project Directions
+\section{Limitations \& Challenges}
+
+The following section addresses some of the main limitations and future challenges against \ac{noma}.
+These are areas which may require research and are potential directions for this project to work.
+
+\subsection{Path Loss Ratio}
+\ac{noma} can may only be applied when the \ac{plr} between \ac{ue}'s is roughly \SI{8}{\decibel} or higher and the rates of \ac{noma} users improves with greater \acp{plr}\cite{ding:2016,yazaki:2014,islam:2017web}.
+This poses as a limitation in how users can be paired in \ac{noma} and how power can be allocated at the \ac{bs}.
+
+\par
+Due to the critical importance of \ac{pa} and \acp{plr} to the success of \ac{noma} coming up with effective \ac{pa} algorithms is of the utmost importance.
+Similarly, for \ac{hnoma}, \ac{uppa} is of great importance as there is the potential to split \acp{ue} into different \ac{oma} resources as well as performing \ac{pa}.
+
+\subsection{Receiver Complexity}
+The \ac{sic} aspect to \ac{noma} introduces a lot of complexity to the receivers \cite{islam:2017,islam:2017web}.
+The \ac{sic} order, needs to be communicated to the receivers.
+\ac{sic} needs to be carried out correctly or errors will propagate and require retransmission, lowering the throughput of the system.
+There is also additional overhead simply in the decoding of the signal.
+All of these factors may hinder make the receivers harder to design and more energy demanding to run.
+
+\subsection{Quantisation Error}
+Quantisation error in the \ac{adc} may cause errors for the receiving \ac{ue} during the signal processing \cite{islam:2017}.
+As some signals will be very weak, particularly compared to the large signals that are to be removed by \ac{sic}, the \acp{adc} must support a large input range with a very high resolution.
+High resolution \acp{adc} can be cost prohibitive and but a certain threshold must be met to support \ac{noma}.
+A trade off will have to be made between quantisation error and the performance of \ac{sic} in these \ac{noma} receivers.
+

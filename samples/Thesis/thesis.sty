@@ -1,0 +1,96 @@
+\ProvidesPackage{thesis}
+
+% Document Styling
+\usepackage[UKenglish]{babel}
+\usepackage{setspace}
+\setstretch{1.667}
+\usepackage{geometry} 
+\geometry{lmargin = 3.54cm, rmargin = 2.54cm}%tmargin = 3.17cm, bmargin = 3.17cm} % printing
+\usepackage{ifthen}
+\newboolean{wc}
+\setboolean{wc}{false}
+\newboolean{wip}
+\setboolean{wip}{false}
+\newcommand{\wipdo}[1]{\ifthenelse{\boolean{wip}}{\todo{#1}}{}}
+
+% Maths
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage{bm}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+\usepackage{physics}
+\usepackage{siunitx}
+\renewcommand{\i}{\mathrm{i}} 
+\usepackage{breqn}
+
+% Formatting
+\usepackage[toc,page]{appendix}
+\usepackage{enumitem}
+\renewcommand{\theenumi}{\Alph{enumi}}
+% \renewcommand\labelitemi{---} % dashes not bullets
+\usepackage{multicol} 
+\usepackage{multirow} 
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyref}
+\renewcommand{\fancyrefdefaultformat}{plain}
+\usepackage{cleveref}
+\usepackage{url}
+\usepackage[super]{nth}
+\usepackage{tocbibind}
+\newcommand{\tsp}[1]{\textsuperscript{#1}}
+\newcommand{\tsb}[1]{\textsubscript{#1}}
+
+% Mixed Media
+\usepackage{graphicx} 
+\graphicspath{{../images/}}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+\usepgfplotslibrary{fillbetween}
+\usepackage{pdfpages} 
+\usepackage{todonotes}
+
+% Abbreviations
+\usepackage[first-style=default,single=true,only-used = true, hyperref = true]{acro}
+\DeclareAcronym{noma}{short = NOMA , long  = Non-Orthongonal Multiple Access}
+\DeclareAcronym{hnoma}{short = H-NOMA , long  = Hybrid \ac{noma}}
+\DeclareAcronym{oma}{short = OMA , long  = Orthongonal Multiple Access}
+\DeclareAcronym{ofdma}{short = OFDMA , long  = Orthongonal Frequency Division Multiple Access}
+\DeclareAcronym{cdma}{short = CDMA , long  = Code Division Multiple Access}
+\DeclareAcronym{tdma}{short = TDMA , long  = Time Division Multiple Access}
+\DeclareAcronym{fdma}{short = FDMA , long  = Frequency Division Multiple Access}
+\DeclareAcronym{ma}{short = MA , long = Multiple Access}
+\DeclareAcronym{fra}{short = FRA , long = Future Radio Access}
+\DeclareAcronym{ran}{short = RAN , long = Radio Access Networks}
+\DeclareAcronym{ue}{short = UE , long = User Equipment}
+\DeclareAcronym{bs}{short = BS , long = Base Station}
+\DeclareAcronym{ccu}{short = CCU , long = Cell Centre User}
+\DeclareAcronym{ceu}{short = CEU , long = Cell Edge User}
+\DeclareAcronym{sic}{short = SIC , long = Successive Interference Cancellation}
+\DeclareAcronym{csi}{short = CSI , long = Channel State Information}
+\DeclareAcronym{nlos}{short = NLOS , long = Non-Line of Sight}
+\DeclareAcronym{los}{short = LOS , long = Line of Sight}
+\DeclareAcronym{mmwave}{short = mmWave , long = Millimetre-wave}
+\DeclareAcronym{pl}{short = PL , long = Path Loss}
+\DeclareAcronym{ple}{short = PLE , long = Path Loss Exponent}
+\DeclareAcronym{plr}{short = PLR , long = Path Loss Ratio}
+\DeclareAcronym{bf}{short = BF , long = beamforming}
+\DeclareAcronym{bfnoma}{short = BF-NOMA , long = NOMA within Beamforming Beams}
+\DeclareAcronym{pa}{short = PA , long = Power Allocation}
+\DeclareAcronym{up}{short = UP , long = User Pairing}
+\DeclareAcronym{uppa}{short = UPPA , long = User Pairing and Power Allocation}
+\DeclareAcronym{pf}{short = PF , long = Proportional Fairness}
+\DeclareAcronym{adc}{short = ADC, long = analogue-to-ditial convertor}
+\DeclareAcronym{sinr}{short = SINR, long = Signal to Interference and Noise Ratio}
+\DeclareAcronym{zf}{short = ZF, long = Zero Forcing}
+\DeclareAcronym{mrt}{short = MRT, long = Maximum Ratio Transmission}
+\DeclareAcronym{bfs}{short = BFS, long = Brute Force Search}
+\DeclareAcronym{foa}{short = FOA, long = First Order Approximation}
+\DeclareAcronym{rf}{short = RF, long = Radio Frequency}
+

@@ -1,0 +1,252 @@
+\chapter{Discussion and Conclusions}
+This chapter aims to discuss, and draw conclusions from, the results seen in \fref{chap:mar}, in the context of the methods documented in that chapter.
+This includes the selection of a channel model, choosing an appropriate \ac{bf} algorithm, and the evaluation of different \ac{noma} schemes and their merits.
+These aspects are all examined with respect to their suitability for \ac{noma} with \ac{bf} in \ac{mmwave} spectrum.
+
+\section{Finding a Suitable Channel Model}
+A suitable channel model, for our purposes, was one which was accurate for \ac{mmwave} spectrum and erred on the side of pessimism when calculating the \ac{pl} seen across the channel.
+A good foundation as a \ac{mmwave} channel is important as the use of \ac{mmwave} spectrum is a core tenant of this thesis and as such was of great importance.
+With the aim of finding a channel model that would be indicative of real \ac{mmwave} channels it was important to choose a channel which gave harsher \ac{pl} results rather than more encouraging results.
+Using such a channel would allow for more confidence in the effectiveness of \ac{noma} systems as the systems would be tested in worse case scenarios.
+
+\par
+The parameters of the channel were to find a channel indicative of one over \ac{mmwave} \SI{28}{\giga\hertz}, a likely spectrum allocation for \ac{fra}, and \ac{nlos}, representative of the modal \ac{los} in current networks.
+
+\subsection{Friis' Transmission Equation}
+Friis' Transmission Equation for \ac{pl} was assumed, and was later shown, to be too simplistic for a \ac{mmwave} channel model.
+However, it made for an interesting contrast to two more likely channel model candidates as the both \ac{ple} and Samsung's model were adaptations to this simplistic \ac{pl} equation.
+Friis' Equation was not under proper consideration but was merely used as a benchmark for a known reference.
+
+\subsection{Path Loss Exponent}
+In contrast with Friis' \ac{pl} equation, the addition of a parameter $\beta$ to \ac{ple} equation leads to more realistic results.
+Since the $\beta$ term can be manipulated to fit the \ac{ple} results it can theoretically be tuned to be quite accurate.
+With this in mind, when using a value of $3.4$, which is typically used for \SI{28}{\giga\hertz} \ac{nlos} systems, expectations were that the results should be promisingly realistic.
+
+\par
+It was later seen that the results from the \ac{ple} channel model were the closest to the NYU model that was used.
+
+\subsection{NYU Empirical Model}
+The NYU model, as it was empirical and modelled off of measurements taken in New York City, seemed most likely to be a strong model going into the simulations done in \fref{sec:ch}.
+NYU's model bares resemblance to the \ac{ple} equation, with $\beta$ also encompassing the pre-calculated constants based on the frequency used.
+The addition of an $\alpha$ term and fitting the $\beta$ parameter to the measured results gave rise to a better founded channel model than those examined earlier in the chapter.
+
+\subsection{Comparing Models}
+\Fref{fig:PLcomp} shows a comparison of the models discussed above.
+It is clear from the figure that the results were close to what was expected.
+
+\par
+The Samsung model, based upon the reference Friis' Transmission Equation for \ac{pl}, seemed too optimistic by $\sim$\SI{10}{\decibel}.
+As this short coming is consistent for both the \ac{ccu} and the \ac{ceu} it could perhaps be adapted to give better results for \ac{mmwave} spectrum.
+However, as the aim was not to propose a channel model but rather to find a suitable one it was discarded.
+
+\par
+The \ac{ple} equation for \ac{pl} was clearly less harsh on the \ac{ccu} than the \ac{ceu} in a way that seemed plausible.
+However, the results seemed too optimistic to make for good testing, particularly at the \ac{ccu}.
+Non-linear attenuation over the channel, shown in the \ac{ple} case as compared to the Friis' and Samsung cases, could be expected from a \ac{mmwave} channel due to the extra interactions of \acp{mmwave} with the atmosphere.
+This shows that the \ac{ple} channel model did have promise with the values selected.
+
+\par
+The NYU model gave results which seem the best justified by their approach as well as being the most pessimistic in their indication of received signal strength.
+Pessimistic results can make for a good test scenario, as the results can be more interesting than the best case results.
+The fact that these results are also consistent with other channel models and seem well founded in the source material makes the NYU channel model a strong basis for the examinations of \ac{noma} which followed.
+
+\section{Basic NOMA Simulations}
+Simulating \ac{noma} using purely \ac{pa}, and no \ac{bf}, was important for benchmarking the success of \ac{noma} systems with \ac{bf} later.
+As the systems were performing \ac{pa} via \ac{bfs} it was only feasible to simulate small numbers of \acp{ue}, so 2-\ac{ue} cells were simulated.
+
+\subsection{System Model}
+The channel for \acp{ue} was based on the NYU model discussed earlier.
+Small scale fading was factored into the NYU predicted \ac{pl} to add further variation to the channels tested.
+
+\par
+\ac{pl} is a function of distance.
+The distances used fell within the range of \SIrange{50}{250}{\metre} for all \acp{ue} in the attached to the \ac{bs}.
+
+\par
+The optimal \ac{pa} was found using \ac{bfs}.
+\ac{bfs} is inefficient and restricted the scope of these simulations to only a small number of \acp{ue}, for which the inefficiency was still acceptable.
+
+\subsection{Simulation Results}
+In these simulations \ac{noma} greatly favoured the \ac{ccu} in the majority, to the extent that the \ac{ceu} was almost always excluded if the aim was to maximise the system throughput.
+This result was discouraging as it implied that sumrate was higher when using \ac{oma} for \ac{ma} instead of \ac{noma}.
+
+\par
+Of course, improvements were seen to sumrates once \ac{noma} with \ac{bf} was considered.
+
+\section{Beamforming NOMA}
+Considering \ac{noma} with \ac{bf} became necessary once it was apparent that the results from basic \ac{noma} were not sufficient, and were failing to improve sumrates.
+The problem was broken in two, considering \ac{bf} direction and \ac{pa} separately.
+In sum, \fref{sec:bfsim} showed that the using \ac{noma} with \ac{bf} algorithms gave a good boost to sumrates and spectral efficiency.
+
+\par
+Random \ac{bf} precoders showed that \ac{bf} was indeed a viable way to improve earlier results, though it was not practicable due to the nature of the \ac{bfs} used.
+
+\par
+Later examination of \ac{bf} algorithms showed that \ac{mrt} had an advantage over the results seen from \ac{zf}.
+This investigation lead \ac{mrt} to be adopted as a \ac{bf} precoder for the rest of the work conducted in this thesis.
+
+\par
+Simulations testing various \ac{pa} and \ac{uppa} schemes showed that the iterative method of \ac{pa} had optimal performance with great efficiency.
+While full \ac{noma} systems performed well in simulation, \ac{hnoma} with \ac{pf} is potentially a better alternative for systems with larger numbers of \acp{ue} due to issues likely to occur at receivers.
+\subsection{System Model}
+The system model for \ac{noma} with \ac{bf} differed from the basic \ac{noma} model primarily through the addition of extra antennas at the \ac{bs} and the considerations which come with that.
+The main considerations being how the channel is now represented as a vector and \ac{pa} can be done with \ac{bf} to direct power towards a \ac{ue}.
+
+\par
+The introduction of \ac{bf} changes the problem of maximising sumrate from purely considering \ac{pa} or \ac{uppa}, as is the case in basic \ac{noma}, to one of targeting beams and \ac{pa} or \ac{uppa}.
+
+\subsection{Random Beamforming}
+Random \ac{bf} was used to determine the feasibility of \ac{noma} with \ac{bf} over basic \ac{noma}.
+By generating random beams, using brute force, it means that the viability of \ac{bf} can be assessed without tying the results to a specific \ac{bf} algorithm.
+
+\par
+Assessing the success of \ac{bf} in this way gave strong indication that \ac{noma} with \ac{bf} would yield greater sumrates than were seen in earlier simulations.
+Unlike in \fref{sec:basicsim}, in \fref{sec:bfsim} the sumrates were maximised by including more \acp{ue} and by leveraging \ac{noma} to improve the spectral efficiency.
+
+\par
+This result was seen in simulations with both two and three \acp{ue} connected to a \ac{bs}.
+Demand on computational resources from using a \ac{bfs} for both \ac{pa} and \ac{bf} precoders ruled out the possibility of simulations with more \acp{ue}.
+However, from early the results it could be extrapolated that \ac{bf} with \ac{noma} should also benefit systems with more \acp{ue}.
+
+\par
+The inefficient use of resources required to generate and test random \ac{bf} precoders also motivated the use of \ac{bf} algorithms to more efficiently and effectively produce good beamformers.
+Random \ac{bf} proved that the use of such algorithms should be capable of generating effective beams and improving the sumrate of \ac{noma} systems.
+
+\subsection{Beamforming Algorithms}
+As the problem of effective \ac{pa} for \ac{noma} had not been tackled yet \ac{bfs} was still used to find the optimal \ac{pa} for each system.
+Once again, using \ac{bfs} restricted the number of \acp{ue} to be small.
+In this case, simulations were performed with two \acp{ue}.
+
+\par
+Both \ac{bf} algorithms used generated a \ac{bf} precoder, which would determine only the of the beams.
+The algorithms considered were \ac{mrt} and \ac{zf}.
+Use of these algorithms is widespread and both determine the \ac{bf} precoder by performing mathematical operations based on the \ac{csi} for the set of \acp{ue} attached to the \ac{bs}.
+
+\par
+\ac{zf} promised to pose lower inter-\ac{ue} interference, which may boost sumrate by giving the \ac{sinr} of each \ac{ue} a smaller denominator.
+This property of \ac{zf} is what gives it its name.
+The \ac{zf} algorithm prioritises lowering interference between \acp{ue} over improving the throughput of the \ac{ue}.
+
+\par
+\ac{mrt}, in contrast with this philosophy, maximises the transmission of each \ac{ue} in their direction, without consideration of the effects of the beam on other \acp{ue}.
+This property of \ac{mrt} maximises the numerator of each \ac{ue}'s \ac{sinr}.
+This should also do well to boost the sumrate of the system as each \ac{ue} should contribute more to the sumrate without being overly hindered by inter-\ac{ue} interference.
+
+\par
+Examining \fref{fig:ZFvMRT} and \fref{tab:ZFvMRT} it can be seen that, on average, both \ac{bf} algorithms achieved almost exactly the same maximum sumrate, though \ac{mrt} produced better sumrates at all other values.
+Though both algorithms seem equally well suited to \ac{noma} systems, \ac{mrt} was chosen for use for the remainder of simulations due to its slight advantage.
+
+\subsection{User Pairing and Power Allocation for Beamforming NOMA}
+\label{sec:concuppa}
+Different \ac{uppa} schemes were examined to investigate the best means of leveraging \ac{noma} with \ac{bf}.
+
+\par
+Of course, methods for using full \ac{noma} were considered, as well as processes which could perform it efficiently. 
+Full \ac{noma} with an iterative method of \ac{pa} proved most successful at this.
+
+\par
+Other \ac{noma} schemes were also evaluated as alternatives, under the assumption that \ac{noma} may become less effective with large numbers of \acp{ue}.
+Amongst these alternate schemes \ac{hnoma} with \ac{pf} yielded the highest sumrates.
+
+\subsubsection{Brute Force Search}
+Using \ac{bfs} for \ac{pa} in \ac{noma} yields the optimal solution to maximise sumrate.
+However, the process is too resource intensive for practical networks, as the \ac{csi} which the \ac{pa} was based on is likely to change by the time the \ac{bfs} completes.
+
+\par
+For large numbers of \acp{ue} the set of possible \acp{pa} is so large that generating the set of possible combinations takes a lot of time.
+This is before computing the theoretical throughput for each subset.
+
+\par
+The computations required to perform an exhaustive search grows exponentially as the number of \acp{ue} increases.
+The number of \ac{pa} combinations required for an n-\ac{ue} \ac{noma} renders this approach unusable.
+
+\par
+Given the issues with using \ac{bfs} other methods of \ac{pa} must be considered as it is not viable.
+
+\subsubsection{Iterative Algorithm}
+To improve on the efficiency of the \ac{bfs}, while maintaining its effectiveness, an iterative algorithm was employed.
+As the sumrate is a non-convex function, an \ac{foa} of the sumrate was iterated upon.
+By using an \ac{foa} the iterative algorithm is capable of finding an equally optimal solution, compared to the \ac{bfs}, with greatly improved use of computational resources. 
+
+\par
+As was shown in \fref{fig:nsc}, this iterative method of \ac{pa} for \ac{noma} systems yielded results which matched those found with the \ac{bfs}.
+Such results make this the favourable method of \ac{pa} for \ac{noma} systems.
+
+\par
+The drawbacks seen with larger numbers of \acp{ue} in \ac{noma} systems --- receiver complexity and \ac{sic} error propagation --- may reduce actual throughput and make \ac{noma} less appealing for those systems.
+The method of \ac{pa}, of course, is still highly effective regardless of other issues seen in these systems.
+
+\subsubsection{Hybrid NOMA}
+\ac{hnoma} is a method of \ac{uppa} which is widely discussed in the literature as a means of combating the issues outlined above. 
+Pairing \acp{ue} with the greatest difference in channel norms, determined by measured \ac{csi}, guarantees the best sumrate for the system as a whole.
+Pairing \acp{ue} into resource groups reduces the complexity needed in receivers and throughput issues resulting from them, but limits the maximum sumrate.
+
+\par
+As \acp{ue} are added to the \ac{hnoma} system throughput does not increase in the way that was seen in full \ac{noma}.
+Instead the throughput oscillates and varies for odd and even numbers of \acp{ue}, with even numbers achieving greater results due to better utilisation of the resources available.
+
+\subsubsection{Hybrid NOMA with Proportional Fairness}
+Using \ac{pf} scheduling, instead of round robin scheduling, with \ac{hnoma} was a way to reduce the impact of underutilised resource groups on sumrate.
+Improving the sumrate of \ac{hnoma} is important since the maximum sumrate is so low in comparison to a full \ac{noma} system.
+
+\par
+\ac{pf} as an alternative method of scheduling achieved this goal.
+Not only was \ac{pf} successful at improving the sumrates for systems which had only one \ac{ue} in a resource group, using this method of scheduling also helped increase the sumrates of systems with fully paired groups when compared to \ac{hnoma}.
+This can be seen in \fref{fig:nsc}, where the sumrates climb slightly higher as \acp{ue} are added.
+
+\subsubsection{NOMA within Beamforming Beams}
+\ac{bfnoma} was conceived of as a method of improving upon the limitations to throughput caused by \ac{hnoma}'s approach to splitting resources.
+It can be seen, when contrasting full \ac{noma} with \ac{hnoma}, that using power as the resource which is shared among \acp{ue} has the least detrimental impact on throughput.
+Taking that as inspiration, \ac{bfnoma} aimed to merge the concept of resource groups (taken from \ac{hnoma}) with the concept of using power as the resource which is being shared (taken from \ac{noma}).
+
+\par
+Using \ac{bfnoma} has some clear advantages and disadvantages when compared to \ac{hnoma}.
+By only splitting \ac{pa} it bears the closest resemblance to the \ac{noma} systems described when considering \ac{bfs} and the iterative method, both of which achieved optimal results.
+The results from those optimal simulation sets suggests that power is the best resource to split, which is the resource being split in \ac{bfnoma}.
+
+\par
+However, a considerable drawback of \ac{bfnoma} is inter-\ac{ue} interference which is caused by other resource groups, or beams.
+These beams are outside the scope of \ac{sic} and reduce sumrate.
+The impetus to investigate \ac{bfnoma} was to lessen the potential reduction in throughput caused by poor \ac{sic}, while \ac{bfnoma}'s avoidance of \ac{sic} is its downfall.
+
+\section{Conclusion}
+The literature surrounding \ac{noma} shows that important areas for improvement include optimising \ac{uppa}, and reducing receiver complexity.
+When also considering the \ac{mmwave} spectrum it can be seen that there is not an agreed channel model for use in examining mobile communications.
+
+\par
+Strengths of this thesis include how the work based is based upon a well founded channel model and the examination of \ac{bf} algorithms which lend themselves to use in \ac{noma} systems.
+Evaluating \ac{uppa} schemes which leverage \ac{noma} to improve spectral efficiency, with consideration given to receiver complexity, is another strength as these issues are highlighted in existing literature as problems facing \ac{noma}.
+
+\par
+\Fref{fig:nsc}, and \fref{tab:nsc}, show that results confirming the point made in \fref{sec:concuppa}.
+
+\par
+The results from \ac{bfs} and the iterative method of \ac{pa} clearly maximise theoretical sumrates for those systems, with the iterative approach being superior in practice.
+Using an iterative algorithm for \ac{pa} is certainly the best for a full \ac{noma} system. 
+The iterative method of \ac{pa} is very successful in solving the problem it aims to address.
+Achieving equally successful results $900\times$ faster than using \ac{bfs} makes \ac{noma} feasible in practice.
+Unlocking this potential is the greatest contribution of this thesis to the literature.
+
+\par
+\ac{hnoma} with \ac{pf} offers the best performance for maximising sumrate while simplifying the \ac{sic} process amongst the remaining \ac{noma} schemes. 
+\ac{bfnoma} failed to achieve the same rates all other offerings in a 2-\ac{ue} case, due to poor correlation between channels.
+\ac{hnoma} performed relatively well but was subject to significant losses in sumrate when a resource group served only one \ac{ue}.
+
+\par
+\ac{bfnoma} may be capable of matching the benefits of \ac{hnoma}, and reducing receiver complexity, while overcoming its short comings, the limit to sumrate seen earlier.
+However, this was not achieved in the testing and simulations conducted as part of this thesis.
+Based on the results in this thesis alone, \ac{bfnoma} is not as good a solution to \ac{ma} as \ac{noma} or \ac{hnoma}.
+
+\par
+\ac{hnoma} with \ac{pf} is another strong contribution offered by this thesis.
+Alternatives to full \ac{noma} systems will be needed given the complexity of those systems and \ac{hnoma} is a good alternative.
+By taking advantage of existing, well developed, and wide spread \ac{ma} technologies as well as \ac{noma} it improves spectral efficiency without the increase in overhead seen in full \ac{noma}.
+While the theoretical throughputs of full \ac{noma} systems are high they may be much lower in practice.
+A reduction in throughput could be seen by error propagation or simply the time taken by \acp{ccu} to decode their messages after decoding the messages of all other \ac{ceu}.
+
+\par
+\ac{noma} with \ac{bf} in \ac{mmwave} spectrum is very promising.
+The sumrates achievable by \ac{noma} and \ac{hnoma} show that the spectral efficiency of this \ac{ma} technology is superior to \ac{oma} systems.
+Improved \ac{ma} is greatly needed to meet the ever-increasing demand for more connected devices. 
+As we move towards using \ac{mmwave} spectrum, \ac{noma} with \ac{bf} will enable that transition and the devices that come with it.
+
